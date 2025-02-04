@@ -37,23 +37,23 @@ const ChatCard = () => {
           }
         };
         socket.onerror = (error) => {
-          console.error('WebSocket error', error);
+          //console.error('WebSocket error', error);
         };
         socket.onclose = () => {
-          console.log('WebSocket connection closed');
+          //console.log('WebSocket connection closed');
         };
         return () => {
           socket.close();
         };
     }, [sender, selectedUserId, messages]);
     
-    console.log("filter all data by user", userHistory);
+    //console.log("filter all data by user", userHistory);
 
     
     useEffect(() => {  
           const socket = new WebSocket('ws://localhost:8080/chatUser');
           socket.onopen = () => {
-            console.log('WebSocket connection opened to /chatUser');
+            //console.log('WebSocket connection opened to /chatUser');
           };
           socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
@@ -62,17 +62,17 @@ const ChatCard = () => {
             } 
           };
           socket.onerror = (error) => {
-            console.error('WebSocket error', error);
+            //console.error('WebSocket error', error);
           };
           socket.onclose = () => {
-            console.log('WebSocket connection closed');
+            //console.log('WebSocket connection closed');
           };
           return () => {
             socket.close();
           };
     }, [messages]);  
 
-    console.log('ffffffffffffffffff=======', users)
+    //console.log('ffffffffffffffffff=======', users)
     // Send chat using form
     const onSubmit = async (data) => {
       const socket = new WebSocket('ws://localhost:8080/messages');
@@ -80,11 +80,11 @@ const ChatCard = () => {
           const messageData = { type: 'newMessage', sender: sender, recipient: selectedUserId, ...data};
           socket.onopen = () => {
             socket.send(JSON.stringify(messageData));
-            console.log('Message sent:', messageData);
+            //console.log('Message sent:', messageData);
           };
           reset();
         } catch (error) {
-          console.error("Error sending SMS:", error);
+          //console.error("Error sending SMS:", error);
         }
       };
 

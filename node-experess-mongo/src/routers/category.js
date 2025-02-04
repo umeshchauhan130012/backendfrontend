@@ -15,7 +15,7 @@ router.post("/category", protect, async(req, res) => {
        res.status(400).send(err)
     } 
 }) 
-//  Get category 
+//  Get category
 router.get("/category", protect, async(req, res) => {
     try{
         const categoryData = await Category.find();

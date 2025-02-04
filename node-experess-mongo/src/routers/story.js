@@ -13,7 +13,7 @@ router.post("/story", protect, upload.fields([
    { name: 'filefirst', maxCount: 1 },  
    { name: 'filesecond', maxCount: 1 } 
  ]), async(req, res) => {
-   const { headline, subheadline, slug, summary, bodytext, pagetitle, metatitle, metakeyword, metadescription } = req.body; 
+   const { headline, subheadline, slug, category, tags, summary, bodytext, pagetitle, metatitle, metakeyword, metadescription } = req.body; 
    if (!req.files || !req.files.filefirst || !req.files.filesecond) {
       return res.status(400).json({ message: 'No file uploaded2222' });
     }
@@ -22,6 +22,8 @@ router.post("/story", protect, upload.fields([
          headline: headline,
          subheadline: subheadline,
          slug: slug,
+         category: category,
+         tags: tags,
          summary: summary,
          bodytext: bodytext,
          pagetitle: pagetitle,
@@ -84,10 +86,12 @@ router.patch("/story/:id", protect, upload.fields([
         return res.status(404).json({ message: 'Story not found' });
       }
       // Update metadata fields from req.body
-      const { headline, subheadline, slug, summary, bodytext, pagetitle, metatitle, metakeyword, metadescription } = req.body;
+      const { headline, subheadline, slug, category, tags, summary, bodytext, pagetitle, metatitle, metakeyword, metadescription } = req.body;
       if (headline) story.headline = headline;
       if (subheadline) story.subheadline = subheadline;
       if (slug) story.slug = slug;
+      if (category) story.category = category;
+      if (tags) story.tags = tags;
       if (summary) story.summary = summary;
       if (bodytext) story.bodytext = bodytext;
       if (pagetitle) story.pagetitle = pagetitle;

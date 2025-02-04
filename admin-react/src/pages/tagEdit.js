@@ -22,8 +22,7 @@ const TagEdit = () => {
                 <option value="delete">Delete</option>
             </select>
         </>
-      ));
-
+    ));
 
     useEffect(() => {
         const fetchDataById = async () => {

@@ -3,7 +3,7 @@ import JoditEditor from 'jodit-react';
 import { useForm } from "react-hook-form";
 import { useSearchParams } from 'react-router-dom';
 import ProtectedRoute from '../components/protectedRouts';
-import { storyGetById, storyUpdate } from '../api/api';
+import { getAllCategory, getAllTags, storyGetById, storyUpdate } from '../api/api';
 import Toast from '../components/toast';
 import Config from '../api/baseUrl';
 
@@ -18,8 +18,12 @@ const StoryEdit = () => {
     const [secondImagePath, setSecondImagePath] = useState('');
     const [activeTab, setActiveTab] = useState(0);
     const [loading, setLoading] = useState(false);
+    const [catData, setCateData] = useState([]);
+    const [tagData, setTagData] = useState([]);
     const [toast, setToast] = useState({ message: '', type: '', visible: false });
 	const [bodytext, setBodytext] = useState('');
+    const [dfcat, setDfcat] = useState('');
+    const [dftag, setDfTag] = useState('');
     const [dataRefresh, setDataRefresh] = useState(false);
     const selectId = searchParams.get('id');
     const { register, handleSubmit, formState: { errors }, reset, clearErrors, setError, setValue } = useForm();
@@ -50,6 +54,8 @@ const StoryEdit = () => {
             setError("slug", { type: "manual", message: "This field is required1" });
           }
     };
+
+
     const handleCategoryFileChange=(e)=>{
     if (e.target.files.length > 0) {
         let filename = e.target.files[0].name;
@@ -70,13 +76,51 @@ const StoryEdit = () => {
     }
 
     useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await getAllCategory('/category');
+            setCateData(response);
+          } catch (error) {
+            console.error('Failed to fetch data:', error);
+          }
+        };
+        fetchData();
+      }, []); 
+
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await getAllTags('/tags');
+             setTagData(response);
+          } catch (error) {
+            console.error('Failed to fetch data:', error);
+          }
+        };
+        fetchData();
+      }, []); 
+
+      useEffect(() => {
+        if (dfcat) {
+          setValue("category", dfcat);
+        }
+        if(dftag) {
+          setValue("tags", dftag);
+        }
+
+      }, [dfcat, setValue, dftag]);
+
+    useEffect(() => {
         const fetchDataById = async () => {
             try {
             const response = await storyGetById(`/story/${selectId}`);
             setBodytext(response?.bodytext);
+            setDfcat(response?.category);
+            setDfTag(response?.tags);
             setValue("headline", response?.headline || '');
             setValue("subheadline", response?.subheadline || '');
             setValue("slug", response?.slug || '');
+            setValue("category", response?.category || '');
+            setValue("tags", response?.tags || '');
             setValue("summary", response?.summary || '');
             setValue("bodytext", response?.bodytext || '');
             setValue("pagetitle", response?.pagetitle || '');
@@ -111,6 +155,8 @@ const StoryEdit = () => {
             formData.append("headline", data.headline);
             formData.append("subheadline", data.subheadline);
             formData.append("slug", data.slug || inputSlugValue);
+            formData.append("category", data.category);
+            formData.append("tags", data.tags);
             formData.append("summary", data.summary);
             formData.append("bodytext", bodytext);
             formData.append("pagetitle", data.pagetitle);
@@ -182,6 +228,37 @@ const StoryEdit = () => {
                     <div className="inputfieldwrap">
                         <label>Slug View</label>
                         <input className="inputfield readonly" value={inputSlugValue} readOnly />
+                    </div>
+                </div>
+                <div className="inputfielgrid">
+                    <div className="inputfieldwrap">
+                    <label>Category<em>*</em></label>
+                    <select className="inputfield" {...register("category", { required: 'This field is required' })} defaultValue={dfcat || ""}>
+                        <option>Select...</option>
+                        {
+                            catData && catData.map((item, ind)=> {
+                                return ( <option value={item.catname} key={ind}>{item.catname}</option> )
+                            })
+                        }
+                        
+                    </select>
+                    {errors.category && <span className="error-message">{errors.category.message}</span>}
+                    </div>
+                </div>
+                <div className="inputfielgrid">
+                    <div className="inputfieldwrap">
+                    <label>Tag</label>
+                    <select className="inputfield" {...register("tags")}>
+                        <option value="">Select...</option>
+                       {
+                        tagData && tagData.map((item, ind)=>{
+                            return(
+                                <option value={item.tagname} key={ind}>{item.tagname}</option>
+                            )
+                        })
+                       } 
+                    </select>
+                    {errors.tags && <span className="error-message">{errors.tags.message}</span>}
                     </div>
                 </div>
                 <div className="inputfielgridfull">

@@ -188,9 +188,9 @@ const MenuItem = [
     },
     {
         SubMenu:false,
-        MenuItemName:"Menu",
+        MenuItemName:"Add Menu",
         MenuItemIcon:"fa-plus-square-o",
-        MenuItemLink:"contact",
+        MenuItemLink:"/dashboard/add-menu",
         ChildMenu:[],
     }
 ];

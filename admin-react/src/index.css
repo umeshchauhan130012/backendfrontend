@@ -287,12 +287,23 @@ h5{font-size:18px}
 .jodit-ui-group__speechRecognize{display: none !important;}
 .buttonwrape{width:100%;background-color:#fff;border-top:1px solid #ddd;padding:14px 20px 20px;text-align:right}
 .buttonst{display:inline-block;line-height:1;padding:12px 20px;min-width:100px;text-align:center;border:1px solid #294662;font-family:inherit;font-weight:500;font-size:15px;color:#fff;background-color:#294662;outline:none;cursor:pointer}
-.buttonst:hover{opacity:.9}
+.buttonst:hover{opacity:.9;color:#fff;}
+button[disabled] {cursor: no-drop;}
 .error-message {color: red;font-weight: 500;font-size: 13px;}
 .readonly{cursor: no-drop;opacity: .9;background-color: #fafafa;}
 .custom-fullform-wrapper{padding:6px 16px 0px;display:flex;flex-wrap:wrap}
 .formbithout-sectionm{background-color:#fff;width:100%;min-height: calc(100vh - 220px);}
-.formbithout-section {padding:16px 10px;display:flex;flex-wrap:wrap;width:100%}
+.formbithout-section {padding:16px 10px;display:flex;flex-wrap:wrap;width:100%;border-bottom: 14px solid #f8f8f8;}
+.all-menuitems {padding: 16px 17px;}
+.all-menuitems h2 {font-size: 20px;font-weight: 600;margin-bottom: 10px;padding: 0px 0px 7px;border-bottom: 1px solid #ebebeb;}
+.all-menuitems p {font-size: 15px;color: #c1c1c1;}
+.menuitems-lavel {margin: 0px;padding: 0px;list-style-type: none;}
+.menuitems-lavel li {background-color: rgb(87 87 87 / 25%);margin-bottom: 5px;padding: 5px 7px;font-size: 14px;}
+.menuitems-lavel ul {margin: 0px;padding: 7px 13px 0px;list-style-type: none;display: block;width: 100%;}
+.menuitems-lavel ul li {background-color: rgb(152 152 152 / 15%);}
+.menuitems-lavel ul ul li {background-color: rgb(165 165 165 / 33%);}
+.menuitems-lavel > li {display: flex;width: 100%;flex-wrap: wrap;}
+.menueditbtn {margin-left: auto;}
 .chkboxbtn-wrap {margin-bottom: 15px;}
 .chkboxbtn-label {display: block;font-size: 15px;font-weight: 500;margin-bottom: 5px;}
 .chkboxbtn {display: block;width: max-content;padding: 7px 10px;background-color: #dedede;line-height: 1;cursor: pointer;}
@@ -305,8 +316,27 @@ h5{font-size:18px}
 .editbtn-icon{background-color:#11a211;color:#fff;border:none;padding:5px 8px;border-radius:3px;margin-right:5px;outline:none;cursor:pointer}
 .deletebtn-icon{background-color:#f90707;color:#fff;border:none;padding:5px 8px;border-radius:3px;outline:none;cursor:pointer}
 .deletebtn-icon:hover,.editbtn-icon:hover{opacity:.7}
+.menueditbtn button {font-size: 10px;}
 .customtable-style .rdt_Pagination {background-color: #f3f3f3;border-bottom: 1px solid #dddddd;}
 .formbold-drop-file img {max-width: 100px;display: block;margin-top: -13px;margin-bottom: -6px;width: 100%;}
+.inputfielgridsingle{width:100%;display:flex;flex-wrap:wrap;}
+.inputfielgridsingle .inputfieldwrap{padding:0 10px;flex-grow:1;margin-bottom: 7px;}
+.inputfieldwrapend label, .inputfieldwrapindex label{display:block;font-size:15px;font-weight:500;margin-bottom:5px}
+.action-contain{display:flex;margin:0 -5px}
+.inputfieldwrapindex .inputfield {width: 70px;}
+.inputfieldwrapindex {padding: 0 10px;margin-bottom: 7px;}
+.action-contain span{padding:10px 10px 9px;margin:0 5px;background-color:#ffffff;cursor:pointer;display:block;border:1px solid #ddd;border-radius:4px;font-size:17px;width:56px;text-align:center}
+.inputfieldwrapend {margin-bottom: 8px;padding: 0px 10px;}
+.action-contain span:hover {background-color: #f7f7f7;}
+.formbithout-popup {min-height: 160px;display: flex;flex-direction: column;}
+.btngrp {margin-top: auto;text-align: right;padding: 0px 4px;}
+.btngrp button {font-size: 14px;padding: 9px 16px;line-height: 1;font-family: inherit;margin: 0px 6px;cursor: pointer;outline: none;}
+.btngrp button:hover {opacity: .7;}
+.successbtn{border: 1px solid #11a211;background-color:#11a211;color:#fff;}
+.cancelbtn{border: 1px solid #f90707;background-color:#f90707;color:#fff;}
+.inputfielgridout {background-color: rgb(157 157 157 / 32%);padding: 10px 5px;margin-bottom: 10px;}
+.inputfielgridsinglewpmain {background-color: rgb(202 202 202 / 83%);width: calc(100% - 20px);margin: 0 auto;padding: 5px 0px 5px;}
+.inputfielgridsinglewpmain .inputfielgridsinglewpmain {background-color: rgb(101 101 101 / 10%);}
 /* chart style */
 .chart-wrapper {border-radius: 10px;box-shadow: 0 0 50px rgba(0,0,0,.03);background-color: #fff;padding: 15px;}
 /* chat box*/

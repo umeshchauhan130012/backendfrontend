@@ -12,6 +12,13 @@ const dtorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String,
+        required: true
+    },
+    tags: {
+        type: String,
+    },
     summary: {
         type: String,
     },

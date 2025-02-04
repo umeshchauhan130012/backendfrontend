@@ -4,9 +4,11 @@ const loginRoute = require("./routers/login")
 const tagData = require("./routers/tag");
 const storyData = require("./routers/story");
 const socialData = require("./routers/social");
+const menuData = require("./routers/menuitem");
 const categoryData = require("./routers/category");
 const gallery = require("./routers/gallery");
 const chat = require("./routers/chat");
+const email = require("./routers/email");
 const { createServer } = require('http');
 const { WebSocketServer } = require('ws');
 const { handleSocketConnection } = require('./sockets/socketHandler');
@@ -19,9 +21,11 @@ app.use(loginRoute);
 app.use(tagData);
 app.use(storyData);
 app.use(socialData);
+app.use(menuData);
 app.use(categoryData);
 app.use(gallery);
 app.use(chat);
+app.use(email);
 
 const server = createServer(app);
 const wss = new WebSocketServer({ server });

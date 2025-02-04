@@ -16,7 +16,7 @@ const Dashboard = () => {
                             <h4>Site Reports</h4>
                         </div>
                     </div>
-                </div>
+                </div>  
                 <div className="custom-row">
                     <div className="custom-col-3 custom-col-sm-6">
                         <StoryCard title="All Story" cardType="Story"/>

@@ -316,7 +316,7 @@ export const getAllGallery = async (endpoint) => {
     throw error;
   }
 };
-// Delete Tags
+// Delete gallery
 export const galleryDelete = async (endpoint) => {
   const token = localStorage.getItem('authToken');
   if (!token) {
@@ -330,6 +330,79 @@ export const galleryDelete = async (endpoint) => {
     throw error;
   }
 };
+// add menu
+export const addMenu = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.post(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+//get All menu
+export const getAllMenu = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Delete Menu
+export const deleteSingleMenu = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.delete(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Get by id single menu
+export const getSingleMenuId = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Update tags
+export const updateSingleMenu = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.patch(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+
 // Send SMS
 // export const sendSMS = async (endpoint, payload) => {
 //   try {

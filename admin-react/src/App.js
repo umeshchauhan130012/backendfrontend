@@ -15,6 +15,7 @@ import StoryEdit from './pages/storyEdit';
 import GalleryAdd from './pages/galleryAdd';
 import GalleryEdit from './pages/galleryEdit';
 import GalleryList from './pages/galleryList';
+import AddMenuPage from './pages/addMenu';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/dashboard/gallery-add" element={<GalleryAdd />} />
         <Route path="/dashboard/gallery-list" element={<GalleryList />} />
         <Route path="/dashboard/gallery-edit" element={<GalleryEdit />} />
+        <Route path="/dashboard/add-menu" element={<AddMenuPage />} />
       </Routes>
     </Router>
   );
