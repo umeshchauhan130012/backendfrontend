@@ -3,6 +3,7 @@ import ProtectedRoute from '../components/protectedRouts';
 import { useForm } from "react-hook-form";
 import Toast from '../components/toast';
 import { addTags } from '../api/api';
+import Div from '../components/div';
 
 const TagsAdd = () => {
     const { register, handleSubmit, formState: { errors }, reset, setError } = useForm();
@@ -36,16 +37,16 @@ const TagsAdd = () => {
     };
     return (
         <ProtectedRoute>
-            <div className='custom-container'>
-                <div className="custom-row">
-                    <div className="custom-col-12">
-                        <div className="custom-section-title">
+            <Div className='custom-container'>
+                <Div className="custom-row">
+                    <Div className="custom-col-12">
+                        <Div className="custom-section-title">
                             <h4>Add New Tag</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="custom-fullform-wrapper">
+                        </Div>
+                    </Div>
+                </Div>
+            </Div>
+            <Div className="custom-fullform-wrapper">
             {toast.visible && (
                 <Toast 
                 message={toast.message} 
@@ -55,42 +56,42 @@ const TagsAdd = () => {
                 />
             )}
                 <form onSubmit={handleSubmit(onSubmit)} className="formbithout-sectionm">
-                    <div className="formbithout-section">
-                        <div className="inputfielgrid">
-                            <div className="inputfieldwrap">
+                    <Div className="formbithout-section">
+                        <Div className="inputfielgrid">
+                            <Div className="inputfieldwrap">
                                 <label>HasTag (Use # Symbole at start)<em>*</em></label>
                                 <input className="inputfield" type="text" {...register("tagname", { required: 'This field is required' })} />
                                 {errors.tagname && <span className="error-message">{errors.tagname.message}</span>}
-                            </div>
-                        </div>
-                        <div className="inputfielgrid">
-                            <div className="inputfieldwrap">
+                            </Div>
+                        </Div>
+                        <Div className="inputfielgrid">
+                            <Div className="inputfieldwrap">
                                 <Selectcm {...register("tagstatus")} />
-                            </div>
-                        </div>
-                        <div className="inputfielgrid">
-                            <div className="inputfieldwrap">
+                            </Div>
+                        </Div>
+                        <Div className="inputfielgrid">
+                            <Div className="inputfieldwrap">
                                 <label>URL (Use full URL with http:// or https://)<em>*</em></label>
                                 <input className="inputfield" type="text" {...register("tagurl", { required: 'This field is required1' })} />
                                 {errors.tagurl && <span className="error-message">{errors.tagurl.message}</span>}
-                            </div>
-                        </div>
+                            </Div>
+                        </Div>
 
-                        <div className="inputfielgrid">
-                            <div className='chkboxbtn-wrap'>
+                        <Div className="inputfielgrid">
+                            <Div className='chkboxbtn-wrap'>
                                 <span className='chkboxbtn-label'>Show At Home</span>
                                 <label htmlFor="chkboxbtn" className="chkboxbtn" >
                                     <input type="checkbox" id="chkboxbtn" {...register("tagsathome")} />
                                 </label>
-                            </div>
-                        </div>
-                    </div>
+                            </Div>
+                        </Div>
+                    </Div>
                         
-                    <div className="buttonwrape">
+                    <Div className="buttonwrape">
                         <button type="submit" className='buttonst' disabled={loading}>Submit Now</button>
-                    </div>
+                    </Div>
                 </form>
-            </div>
+            </Div>
         </ProtectedRoute>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Toast from './toast';
+import Div from './div';
 
 const Header = () => {
     const [toast, setToast] = useState({ message: '', type: '', visible: false });
@@ -26,15 +27,15 @@ const Header = () => {
                 onClose={() => setToast({ ...toast, visible: false })} 
                 />
             )}
-            <div className="custom-header-inner">
-                <div className="custom-container">
-                    <div className="custom-row">
-                        <div className="custom-search-container">
+            <Div className="custom-header-inner">
+                <Div className="custom-container">
+                    <Div className="custom-row">
+                        <Div className="custom-search-container">
                             <form className="custom-search-block">
                                 <input type="text" className="custom-form-control" placeholder="Search..." autoComplete="off" />
                                 <button type="submit" className="search-button-icon"><i className="fa fa-search"></i></button>
                             </form>
-                        </div>
+                        </Div>
                         <ul className="header-top-menu">
                             <li>
                                 <button><i className="fa fa-bell" aria-hidden="true"></i></button>
@@ -73,9 +74,9 @@ const Header = () => {
                                 </ul>
                             </li>
                         </ul>
-                    </div>
-                </div>
-            </div>
+                    </Div>
+                </Div>
+            </Div>
         </header>
     );
 }

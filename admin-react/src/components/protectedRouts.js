@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import Header from './header';
 import Sidebar from './sidebar';
 import Footer from './footer';
+import Div from './div';
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('authToken');
@@ -13,11 +14,11 @@ const ProtectedRoute = ({ children }) => {
   <>
       <Header />
       <Sidebar />
-      <div className="custom-body-wrapper">
-        <div className="custom-space-section">
+      <Div className="custom-body-wrapper">
+        <Div className="custom-space-section">
           {children}
-        </div>
-      </div>
+        </Div>
+      </Div>
       <Footer />
     </>
   )

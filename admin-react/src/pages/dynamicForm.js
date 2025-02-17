@@ -1,5 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Div from '../components/div';
 
 function DynamicForm() {
   const { register, handleSubmit, setValue, getValues } = useForm();
@@ -146,9 +147,9 @@ function DynamicForm() {
                 const currentPath = [...path, item.id];
                 const namePrefix = `level-${currentPath.length}-${item.id}`; // Ensure unique namePrefix using item.id
                 return (
-                    <div className="inputfielgridsinglewrp" key={item.id}>
-                        <div className="inputfielgridsingle">
-                            <div className="inputfieldwrap">
+                    <Div className="inputfielgridsinglewrp" key={item.id}>
+                        <Div className="inputfielgridsingle">
+                            <Div className="inputfieldwrap">
                                 <label>Item Name<em>*</em></label>
                                 <input
                                     className="inputfield"
@@ -160,8 +161,8 @@ function DynamicForm() {
                                     }
                                     placeholder="Name"
                                 />
-                            </div>
-                            <div className="inputfieldwrap">
+                            </Div>
+                            <Div className="inputfieldwrap">
                                 <label>Url</label>
                                 <input
                                     className="inputfield"
@@ -173,14 +174,14 @@ function DynamicForm() {
                                     }
                                     placeholder="Url link"
                                 />
-                            </div>
-                            <div className="inputfieldwrap">
+                            </Div>
+                            <Div className="inputfieldwrap">
                                 <Selectcm
                                     value={item.status || ''}
                                     {...register(`${namePrefix}-status`)} // Use dynamic unique namePrefix
                                 />
-                            </div>
-                            <div className="inputfieldwrapindex">
+                            </Div>
+                            <Div className="inputfieldwrapindex">
                                 <label>Index</label>
                                 <input
                                     className="inputfield"
@@ -191,10 +192,10 @@ function DynamicForm() {
                                         updateItem(currentPath, 'indxno', e.target.value)
                                     }
                                 />
-                            </div>
-                            <div className="inputfieldwrapend">
+                            </Div>
+                            <Div className="inputfieldwrapend">
                                 <label>Actions</label>
-                                <div className="action-contain">
+                                <Div className="action-contain">
                                     <span
                                         onClick={() => deleteItem(currentPath)}
                                         className="fa fa-trash-o"
@@ -212,11 +213,11 @@ function DynamicForm() {
                                             title="add child"
                                         ></span>
                                     )}
-                                </div>
-                            </div>
-                        </div>
+                                </Div>
+                            </Div>
+                        </Div>
                         {item.children.length > 0 && renderList(item.children, currentPath)}
-                    </div>
+                    </Div>
                 );
             })}
         </>
@@ -224,27 +225,27 @@ function DynamicForm() {
 };
 
   return (
-    <div>
-      <div className="custom-container">
-        <div className="custom-row">
-          <div className="custom-col-12">
-            <div className="custom-section-title">
+    <Div>
+      <Div className="custom-container">
+        <Div className="custom-row">
+          <Div className="custom-col-12">
+            <Div className="custom-section-title">
               <h4>Add Menu</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="custom-fullform-wrapper">
+            </Div>
+          </Div>
+        </Div>
+      </Div>
+      <Div className="custom-fullform-wrapper">
         <form onSubmit={handleSubmit(onSubmit)} className="formbithout-sectionm">
-          <div className="formbithout-section">
+          <Div className="formbithout-section">
             {renderList(items)}
-          </div>
-          <div className="buttonwrape">
+          </Div>
+          <Div className="buttonwrape">
             <button type="submit" className="buttonst">Submit Now</button>
-          </div>
+          </Div>
         </form>
-      </div>
-    </div>
+      </Div>
+    </Div>
   );
 }
 

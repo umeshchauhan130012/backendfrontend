@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
+import Div from './div';
 
 const colors = [
     '#FF5733', '#33FF57', '#3357FF', '#F1C40F', '#9B59B6', 
@@ -94,53 +95,53 @@ const ChatCard = () => {
     };
 
     return (
-            <div className={`chat-app ${activeChat ? 'user-selected' : '' }`}>
-                <div className="chat-title">
-                    <div className="avataric">
+            <Div className={`chat-app ${activeChat ? 'user-selected' : '' }`}>
+                <Div className="chat-title">
+                    <Div className="avataric">
                         <img src="https://www.pikpng.com/pngl/b/109-1099794_ios-emoji-emoji-iphone-ios-heart-hearts-spin.png" />
-                    </div>
-                    <div className="author-chat">
+                    </Div>
+                    <Div className="author-chat">
                         <h1>Bot</h1>
                         <h2>Online</h2>
-                    </div>
-                    <div className='chatclose' onClick={removeChat}></div>
-                </div>
-                <div className="messages-group">
-                    <div className="messages-content">
-                        <div className="mCustomScrollBox">
-                            <div className="mCSB_container">
+                    </Div>
+                    <Div className='chatclose' onClick={removeChat}></Div>
+                </Div>
+                <Div className="messages-group">
+                    <Div className="messages-content">
+                        <Div className="mCustomScrollBox">
+                            <Div className="mCSB_container">
                                {userHistory && userHistory.map((item, ind) => {
                                 const isSentByCurrentUser = item.sender === sender;
                                     return (
-                                    <div className={`messagebx ${isSentByCurrentUser ? "outbox" : "inbox"}`} key={ind} >
-                                        <div className="smsavatar">{item.message}</div> 
-                                        <div className="timestamp">{new Date(item.timestamp).toLocaleString()}</div>
-                                    </div>
+                                    <Div className={`messagebx ${isSentByCurrentUser ? "outbox" : "inbox"}`} key={ind} >
+                                        <Div className="smsavatar">{item.message}</Div> 
+                                        <Div className="timestamp">{new Date(item.timestamp).toLocaleString()}</Div>
+                                    </Div>
                                     )
                                 })}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className='allmessage-user'>
-                    <div className="allmessage-inn">
+                            </Div>
+                        </Div>
+                    </Div>
+                </Div>
+                <Div className='allmessage-user'>
+                    <Div className="allmessage-inn">
                     {users && users.map((data, ind) => {
                         // const firstLetter = data.charAt(0);
                         const firstLetter = 'A';
                         const backgroundColor = colors[ind % colors.length];
                         return (
-                            <div className="allmessage-items" key={ind}  onClick={() => handleUserClick(data.sender)}>
+                            <Div className="allmessage-items" key={ind}  onClick={() => handleUserClick(data.sender)}>
                                 <span className='userp-name' style={{ backgroundColor }}>{firstLetter}{data && data.online ? <em className="liveic live"></em> : <em className="liveic"></em>}</span>
                                 <h4>{data.sender}</h4>
-                            </div>
+                            </Div>
                     )})}
-                    </div>
-                </div>
+                    </Div>
+                </Div>
                 <form onSubmit={handleSubmit(onSubmit)} className="message-box" style={{ backgroundColor: errors.message ? '#ffe1e1' : 'white' }}>
                     <textarea required type="text" className="message-input" placeholder="Type message..." {...register("message", { required: 'This field is required',validate: {noWhitespace: value => value.trim() !== '' || 'Message cannot be only whitespace' } })}></textarea>
                     <button type="submit" className="message-submit">Send</button>
                 </form> 
-            </div>
+            </Div>
         );
     }
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Div from "./div";
 
 const MenuManager = () => {
   const [menuItems, setMenuItems] = useState([]); // Array to store menu items
@@ -96,9 +97,9 @@ const MenuManager = () => {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <Div style={{ padding: "20px" }}>
       <h1>Menu Manager</h1>
-      <div style={{ marginBottom: "10px" }}>
+      <Div style={{ marginBottom: "10px" }}>
         <input
           type="text"
           name="name"
@@ -137,16 +138,16 @@ const MenuManager = () => {
           ))}
         </select>
         <button onClick={addMenuItem}>Add Menu Item</button>
-      </div>
-      <div>
+      </Div>
+      <Div>
         <h2>Menu Items:</h2>
         {menuItems.length === 0 ? (
           <p>No menu items added yet.</p>
         ) : (
           <ul>{renderMenuItems(menuItems)}</ul>
         )}
-      </div>
-    </div>
+      </Div>
+    </Div>
   );
 };
 

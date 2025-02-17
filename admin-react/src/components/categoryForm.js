@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import axios from "axios";
+import Div from './div';
 
 const CategoryForm = () => {
 
@@ -40,9 +41,9 @@ const onSubmit = async (data) => {
 };
 
   return (
-    <div className="tagformwrapmain">
+    <Div className="tagformwrapmain">
         {success && <p style={{ color: 'green' }}>{success}</p>}
-        <div className="tagformwrap">
+        <Div className="tagformwrap">
             <form onSubmit={handleSubmit(onSubmit)}>
             <input placeholder="Enter tag name" {...register("name", { required: true })} />
             {errors.name && <p>This field is required</p>}
@@ -53,8 +54,8 @@ const onSubmit = async (data) => {
             {loading && <p>Loading...</p>}
             {error && <p>Error: {error}</p>}
             </form>
-        </div>
-    </div>
+        </Div>
+    </Div>
   )
 }
 

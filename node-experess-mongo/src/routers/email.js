@@ -6,10 +6,11 @@ const cors = require('cors');
 router.use(cors());
 // Nodemailer transport setup
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // Gmail SMTP service
+  host: "smtp.gmail.com",
+  secure: true, // false for TLS, true for SSL (port 465)
   auth: {
-      user: process.env.SMTP_USER, // Your email
-      pass: process.env.SMTP_PASS, // Your app password
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
   },
 });
 
@@ -37,25 +38,5 @@ router.post('/email', async (req, res) => {
   }
 });
 
-// Get all emails
-router.get('/email', async (req, res) => {
-  try {
-    const emails = await Email.find();
-    res.status(200).json(emails);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// Delete an email
-router.delete('/email:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Email.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Email deleted successfully!' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
 
 module.exports = router;

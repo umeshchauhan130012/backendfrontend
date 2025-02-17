@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import ProtectedRoute from '../components/protectedRouts';
 import { galleryPost } from '../api/api';
 import Toast from '../components/toast';
+import Div from '../components/div';
 
 const GalleryAdd = () => {
     const [filefirst, setFilefirst] = useState(null);
@@ -62,15 +63,15 @@ const GalleryAdd = () => {
 
     return (
         <ProtectedRoute>
-        <div className='custom-container'>
-            <div className="custom-row">
-                <div className="custom-col-12">
-                    <div className="custom-section-title">
+        <Div className='custom-container'>
+            <Div className="custom-row">
+                <Div className="custom-col-12">
+                    <Div className="custom-section-title">
                         <h4>Add Gallery</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </Div>
+                </Div>
+            </Div>
+        </Div>
         {toast.visible && (
             <Toast 
             message={toast.message} 
@@ -80,47 +81,47 @@ const GalleryAdd = () => {
             />
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="addStoryform">
-            <div className="addStoryformLeft">
-                <div className="addStoryformLeftInner">
-                    <div className="inputfielgridfull">
-                        <div className="inputfieldwrap">
+            <Div className="addStoryformLeft">
+                <Div className="addStoryformLeftInner">
+                    <Div className="inputfielgridfull">
+                        <Div className="inputfieldwrap">
                             <label>Title<em>*</em></label>
                             <input className="inputfield" type="text" {...register("title", { required: 'This field is required' })} />
                             {errors.title && <span className="error-message">{errors.title.message}</span>}
-                        </div>
-                    </div>
-                    <div className="inputfielgridfull">
-                        <div className="inputfieldwrap">
+                        </Div>
+                    </Div>
+                    <Div className="inputfielgridfull">
+                        <Div className="inputfieldwrap">
                             <label>Alt</label>
                             <input className="inputfield" type="text" {...register("alt")} />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="addStoryformRight">
-                <div className="addStoryformRightin">
-                   <div className='sidetabwrp'>
-                        <div className='tabbodymain'>
-                            <div className='tabbodymainitem'>
-                                <div className="inputfieldwrap">
+                        </Div>
+                    </Div>
+                </Div>
+            </Div>
+            <Div className="addStoryformRight">
+                <Div className="addStoryformRightin">
+                   <Div className='sidetabwrp'>
+                        <Div className='tabbodymain'>
+                            <Div className='tabbodymainitem'>
+                                <Div className="inputfieldwrap">
                                     <label>Gallery Image<em>*</em></label>
-                                    <div className='fileuploadewrp'>
+                                    <Div className='fileuploadewrp'>
                                         <label htmlFor="categoryfile" style={borderRedCat && borderRedCat ? { borderColor: 'red',backgroundColor: '#fff2f2'} : {}}>
                                             <span className="formbold-drop-file">{categoryFileName && categoryFileName ? categoryFileName : 'Select File here'}</span>
                                             <span className="formbold-or">Files Supported: jpeg, jpg, png, pdf, doc, docx</span>
                                             <span className="formbold-browse">Browse</span>
                                         </label>
                                         <input type="file" name="categoryfile" id="categoryfile" onChange={handleCategoryFileChange} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                   </div>
-                </div>
-            </div>
-            <div className="buttonwrape">
+                                    </Div>
+                                </Div>
+                            </Div>
+                        </Div>
+                   </Div>
+                </Div>
+            </Div>
+            <Div className="buttonwrape">
                <button type="submit" className='buttonst' disabled={loading}>Submit Now</button>
-            </div>
+            </Div>
         </form>
         </ProtectedRoute>
     );

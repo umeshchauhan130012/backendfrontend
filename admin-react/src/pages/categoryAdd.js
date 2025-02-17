@@ -3,6 +3,7 @@ import ProtectedRoute from '../components/protectedRouts';
 import { useForm } from "react-hook-form";
 import Toast from '../components/toast';
 import { addCategory } from '../api/api';
+import Div from '../components/div';
 
 const CategoryAdd = () => {
     const { register, handleSubmit, formState: { errors }, reset, setError } = useForm();
@@ -36,16 +37,16 @@ const CategoryAdd = () => {
     };
     return (
         <ProtectedRoute>
-            <div className='custom-container'>
-                <div className="custom-row">
-                    <div className="custom-col-12">
-                        <div className="custom-section-title">
+            <Div className='custom-container'>
+                <Div className="custom-row">
+                    <Div className="custom-col-12">
+                        <Div className="custom-section-title">
                             <h4>Add New Category</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="custom-fullform-wrapper">
+                        </Div>
+                    </Div>
+                </Div>
+            </Div>
+            <Div className="custom-fullform-wrapper">
             {toast.visible && (
                 <Toast 
                 message={toast.message} 
@@ -55,42 +56,42 @@ const CategoryAdd = () => {
                 />
             )}
                 <form onSubmit={handleSubmit(onSubmit)} className="formbithout-sectionm">
-                    <div className="formbithout-section">
-                        <div className="inputfielgrid">
-                            <div className="inputfieldwrap">
+                    <Div className="formbithout-section">
+                        <Div className="inputfielgrid">
+                            <Div className="inputfieldwrap">
                                 <label>Category<em>*</em></label>
                                 <input className="inputfield" type="text" {...register("catname", { required: 'This field is required' })} />
                                 {errors.catname && <span className="error-message">{errors.catname.message}</span>}
-                            </div>
-                        </div>
-                        <div className="inputfielgrid">
-                            <div className="inputfieldwrap">
+                            </Div>
+                        </Div>
+                        <Div className="inputfielgrid">
+                            <Div className="inputfieldwrap">
                                 <Selectcm {...register("catstatus")} />
-                            </div>
-                        </div>
-                        <div className="inputfielgrid">
-                            <div className="inputfieldwrap">
+                            </Div>
+                        </Div>
+                        <Div className="inputfielgrid">
+                            <Div className="inputfieldwrap">
                                 <label>Category URL<em>*</em></label>
                                 <input className="inputfield" type="text" {...register("catslug", { required: 'This field is required1' })} />
                                 {errors.catslug && <span className="error-message">{errors.catslug.message}</span>}
-                            </div>
-                        </div>
+                            </Div>
+                        </Div>
 
-                        <div className="inputfielgrid">
-                            <div className='chkboxbtn-wrap'>
+                        <Div className="inputfielgrid">
+                            <Div className='chkboxbtn-wrap'>
                                 <span className='chkboxbtn-label'>Show At Home</span>
                                 <label htmlFor="chkboxbtn" className="chkboxbtn" >
                                     <input type="checkbox" id="chkboxbtn" {...register("catathome")} />
                                 </label>
-                            </div>
-                        </div>
-                    </div>
+                            </Div>
+                        </Div>
+                    </Div>
                         
-                    <div className="buttonwrape">
+                    <Div className="buttonwrape">
                         <button type="submit" className='buttonst' disabled={loading}>Submit Now</button>
-                    </div>
+                    </Div>
                 </form>
-            </div>
+            </Div>
         </ProtectedRoute>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link  } from "react-router-dom";
 import { getAllCategory } from '../api/api';
+import Div from './div';
 
 const CategoryCard = (props) => {
 
@@ -18,23 +19,23 @@ const CategoryCard = (props) => {
     }, []);    
 
     return (
-        <div className="custom-card-body">
-            <div className="custom-card-body-item">
-                <div className="custom-card-body-top">
+        <Div className="custom-card-body">
+            <Div className="custom-card-body-item">
+                <Div className="custom-card-body-top">
                     <p className="custom-text-truncate">{props.title}</p>
-                </div>
-                <div className="custom-card-body-lft">
-                    <div className="custom-text-success">
+                </Div>
+                <Div className="custom-card-body-lft">
+                    <Div className="custom-text-success">
                         <i className="fa fa-level-up" aria-hidden="true"></i> +16.24 %
-                    </div>
-                </div>
-            </div>
-            <div className="custom-card-body-item2">
-                <div className="custom-card-body-item2in">
+                    </Div>
+                </Div>
+            </Div>
+            <Div className="custom-card-body-item2">
+                <Div className="custom-card-body-item2in">
                     <h4 className="custom-ff-secondary"><span className="custom-counter-value" data-target="40">{data.length}</span> - {props.cardType}</h4>
                     <Link to="/dashboard/category-list" className='custom-text-muted'>View all Articles</Link>
-                </div>
-                <div className="custom-card-body-iteminn">
+                </Div>
+                <Div className="custom-card-body-iteminn">
                     <span className="custom-success-subtle">
                         <svg className="circle-progress" width="50" height="50" viewBox="0 0 160 160">
                             <circle r="70" cx="80" cy="80" fill="transparent" stroke="#e0e0e0" strokeWidth="6px"></circle>
@@ -42,9 +43,9 @@ const CategoryCard = (props) => {
                             <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fill="#60e6a8" fontWeight="bold" fontSize="3em">90<tspan>%</tspan></text>
                         </svg>
                     </span>
-                </div>
-            </div>
-        </div>
+                </Div>
+            </Div>
+        </Div>
     );
 }
 

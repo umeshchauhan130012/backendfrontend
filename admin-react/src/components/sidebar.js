@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link,NavLink  } from "react-router-dom";
+import Div from './div';
 
 const MenuItem = [
     {
@@ -237,11 +238,11 @@ const Sidebar = () => {
   };
     return (
         <aside className="custom-sidebar">
-            <div className="sidebar-header">
+            <Div className="sidebar-header">
             <a href=""><img src="/logo.svg" alt="logo" height="60" width="90" /></a>
             <span className="sidebar-toggle-active" onClick={handleToggleBody}><i className="fa fa-dot-circle-o" aria-hidden="true"></i></span>
-            </div>
-            <div className="sidebar-menu">
+            </Div>
+            <Div className="sidebar-menu">
                 <ul className="custom-menu-primary">
                     {
                     MenuItem.map((menuVal, Ind) => {
@@ -284,7 +285,7 @@ const Sidebar = () => {
                     })
                     }
                    </ul>
-            </div>
+            </Div>
         </aside>
     );
 }

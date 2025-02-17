@@ -1,21 +1,22 @@
 import React from 'react';
 import ChatCard from './chatCard';
+import Div from './div';
 
 const Footer = () => {
     return (
         <footer className="custom-footer">
-            <div className="custom-footer-inner">
-                <div className="custom-container">
-                    <div className="custom-row">
-                        <div className="custom-col-sm-6 order-2">
+            <Div className="custom-footer-inner">
+                <Div className="custom-container">
+                    <Div className="custom-row">
+                        <Div className="custom-col-sm-6 order-2">
                             <p>CMS © 2023 jbt CMS. All rights reserved.</p>
-                        </div>
-                        <div className="custom-col-sm-6 text-right order-1">
+                        </Div>
+                        <Div className="custom-col-sm-6 text-right order-1">
                             <p>jbt CMS Admin System</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        </Div>
+                    </Div>
+                </Div>
+            </Div>
             <ChatCard />
         </footer>
     );

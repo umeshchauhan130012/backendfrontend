@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Toast.css';
+import Div from './div';
 
 const Toast = ({ message, type, duration = 4000, onClose }) => {
   const [visible, setVisible] = useState(true);
@@ -16,9 +17,9 @@ const Toast = ({ message, type, duration = 4000, onClose }) => {
   if (!visible) return null;
 
   return (
-    <div className={`toast toast-${type}`}>
+    <Div className={`toast toast-${type}`}>
       {message}
-    </div>
+    </Div>
   );
 };
 

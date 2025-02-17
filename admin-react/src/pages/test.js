@@ -240,20 +240,20 @@ const [updateform, setUpdateForm] = useState('');
           onClose={() => setToast({ ...toast, visible: false })} 
           />
       )}
-      <div className="custom-container">
-        <div className="custom-row">
-          <div className="custom-col-12">
-            <div className="custom-section-title">
+      <Div className="custom-container">
+        <Div className="custom-row">
+          <Div className="custom-col-12">
+            <Div className="custom-section-title">
               <h4>Add Menu</h4>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="custom-fullform-wrapper">
-        <div className="formbithout-sectionm">
-          <div className="formbithout-section">
-            <div className="inputfielgridsingle">
-              <div className="inputfieldwrap">
+            </Div>
+          </Div>
+        </Div>
+      </Div>
+      <Div className="custom-fullform-wrapper">
+        <Div className="formbithout-sectionm">
+          <Div className="formbithout-section">
+            <Div className="inputfielgridsingle">
+              <Div className="inputfieldwrap">
                 <label>Item Name<em>*</em></label>
                 <input
                   className="inputfield"
@@ -264,8 +264,8 @@ const [updateform, setUpdateForm] = useState('');
                   onChange={handleInputChange}
                   style={{ marginRight: "10px" }}
                 />
-              </div>
-              <div className="inputfieldwrap">
+              </Div>
+              <Div className="inputfieldwrap">
                 <label>Url<em>*</em></label>
                 <input
                   className="inputfield"
@@ -275,8 +275,8 @@ const [updateform, setUpdateForm] = useState('');
                   value={form.url}
                   onChange={handleInputChange}
                 />
-              </div>
-              <div className="inputfieldwrap">
+              </Div>
+              <Div className="inputfieldwrap">
                 <label>Add Child</label>
                 <select
                   className="cms-all-selector"
@@ -291,8 +291,8 @@ const [updateform, setUpdateForm] = useState('');
                     </option>
                   ))}
                 </select>
-              </div>
-              <div className="inputfieldwrapindex">
+              </Div>
+              <Div className="inputfieldwrapindex">
                 <label>Index</label>
                 <input
                   className="inputfield"
@@ -301,39 +301,39 @@ const [updateform, setUpdateForm] = useState('');
                   value={form.order}
                   onChange={handleInputChange}
                 />
-              </div>
-              <div className="inputfieldwrapend">
+              </Div>
+              <Div className="inputfieldwrapend">
                 <label>Actions</label>
-                <div className="action-contain">
+                <Div className="action-contain">
                   <span className="fa fa-plus" onClick={addMenuItem}></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='all-menuitems'>
+                </Div>
+              </Div>
+            </Div>
+          </Div>
+          <Div className='all-menuitems'>
             <h2>Menu Items:</h2>
             {menuItems.length === 0 ? (
               <p>No menu items added yet.</p>
             ) : (
               <ul className='menuitems-lavel'>{renderMenuItems(menuItems)}</ul>
             )}
-          </div>
-          <div className="buttonwrape">
+          </Div>
+          <Div className="buttonwrape">
             <button type="button" onClick={handleFinalSubmit} disabled={loading} className="buttonst">Submit Now</button>
-          </div>
-          <div className='all-menuitems'>
+          </Div>
+          <Div className='all-menuitems'>
             <ul className='menuitems-lavel'>
                 {
                 menuDataList && [...menuDataList].sort((a, b) => a.order - b.order).map((menuItemVal, Ind) => {
                   return (
                   <li key={Ind}>
-                    <div className='menumainwrp'>
+                    <Div className='menumainwrp'>
                     {menuItemVal.name} <b>-- link:</b> {menuItemVal.url} <b>-- Order:</b> {menuItemVal.order} 
-                    </div>
-                    <div className='menueditbtn'>
+                    </Div>
+                    <Div className='menueditbtn'>
                       <button type="button" className='editbtn-icon' onClick={() => handleMenuEdit(menuItemVal._id)}><i className='fa fa-pencil'></i></button>
                       <button type="button" className='deletebtn-icon' onClick={() => handleMenuDelete(menuItemVal._id)}><i className='fa fa-trash'></i></button>
-                    </div>
+                    </Div>
                     {menuItemVal.children && menuItemVal.children.length > 0 && (
                       <ul>
                         {
@@ -364,9 +364,9 @@ const [updateform, setUpdateForm] = useState('');
                 })
                 }
             </ul>
-          </div>
-        </div>
-      </div>
+          </Div>
+        </Div>
+      </Div>
       {showPopup && (
         <Div style={popupStyle}>
           <p>Are you sure you want to delete?</p>
@@ -377,10 +377,10 @@ const [updateform, setUpdateForm] = useState('');
       {showPopupMenu && (
       <Div style={popupStylefull}>
         <Div style={popupStylefullinner}>
-          <div className="formbithout-popup">
-            <div className="inputfielgridout">
-              <div className="inputfielgridsingle">
-                <div className="inputfieldwrap">
+          <Div className="formbithout-popup">
+            <Div className="inputfielgridout">
+              <Div className="inputfielgridsingle">
+                <Div className="inputfieldwrap">
                   <label>Item Name<em>*</em></label>
                   <input
                     className="inputfield"
@@ -391,8 +391,8 @@ const [updateform, setUpdateForm] = useState('');
                     onChange={updateInputChange}
                     style={{ marginRight: "10px" }}
                   />
-                </div>
-                <div className="inputfieldwrap">
+                </Div>
+                <Div className="inputfieldwrap">
                   <label>Url<em>*</em></label>
                   <input
                     className="inputfield"
@@ -402,8 +402,8 @@ const [updateform, setUpdateForm] = useState('');
                     defaultValue={menuDataGet.url}
                     onChange={updateInputChange}
                   />
-                </div>
-                <div className="inputfieldwrapindex">
+                </Div>
+                <Div className="inputfieldwrapindex">
                   <label>Index</label>
                   <input
                     className="inputfield"
@@ -412,14 +412,14 @@ const [updateform, setUpdateForm] = useState('');
                     defaultValue={menuDataGet.order}
                     onChange={updateInputChange}
                   />
-                </div>
-              </div>
+                </Div>
+              </Div>
               {menuDataGet.children && menuDataGet.children.length > 0 && (
-                <div className="inputfielgridsinglewpmain">
+                <Div className="inputfielgridsinglewpmain">
                   {menuDataGet.children.map((childInp, ind) => (
-                    <div className="inputfielgridsinglewp" key={ind}>
-                      <div className="inputfielgridsingle">
-                        <div className="inputfieldwrap">
+                    <Div className="inputfielgridsinglewp" key={ind}>
+                      <Div className="inputfielgridsingle">
+                        <Div className="inputfieldwrap">
                           <label>Item Name<em>*</em></label>
                           <input
                             className="inputfield"
@@ -429,8 +429,8 @@ const [updateform, setUpdateForm] = useState('');
                             defaultValue={childInp.name}
                             onChange={updateInputChange}
                           />
-                        </div>
-                        <div className="inputfieldwrap">
+                        </Div>
+                        <Div className="inputfieldwrap">
                           <label>Url<em>*</em></label>
                           <input
                             className="inputfield"
@@ -440,8 +440,8 @@ const [updateform, setUpdateForm] = useState('');
                             defaultValue={childInp.url}
                             onChange={updateInputChange}
                           />
-                        </div>
-                        <div className="inputfieldwrapindex">
+                        </Div>
+                        <Div className="inputfieldwrapindex">
                           <label>Index</label>
                           <input
                             className="inputfield"
@@ -451,18 +451,18 @@ const [updateform, setUpdateForm] = useState('');
                             defaultValue={childInp.order}
                             onChange={updateInputChange}
                           />
-                        </div>
-                      </div>
-                    </div>
+                        </Div>
+                      </Div>
+                    </Div>
                   ))}
-                </div>
+                </Div>
               )}
-            </div>
-            <div className='btngrp'>
+            </Div>
+            <Div className='btngrp'>
               <button onClick={updateEdit} disabled="" className='successbtn'>Update</button>
               <button onClick={cancelEdit} disabled="" className='cancelbtn'>Cancel</button>
-            </div>
-          </div>
+            </Div>
+          </Div>
         </Div>
       </Div>
       )}
