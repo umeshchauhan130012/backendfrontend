@@ -4,10 +4,10 @@ const Email = require('../models/emails');
 const router = express.Router();
 const cors = require('cors');
 router.use(cors());
-// Nodemailer transport setup
+
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  secure: true, // false for TLS, true for SSL (port 465)
+  secure: true,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -16,21 +16,18 @@ const transporter = nodemailer.createTransport({
 
 router.post('/email', async (req, res) => {
   const { to, subject, message } = req.body;
-
   if (!to || !subject || !message) {
       return res.status(400).json({ error: 'All fields are required' });
   }
-
   try {
-      // Send email
       await transporter.sendMail({
-          from: process.env.SMTP_USER, // Your Gmail ID
-          to,                          // Recipient's email
-          subject,                     // Email subject
-          text: message,               // Plain text email body
+          from: process.env.SMTP_USER,
+          to,                        
+          subject,                
+          text: message,       
       });
-
-      // Respond with success
+      const emailModel = new Email({ to, subject, message });
+      await emailModel.save();
       res.status(200).json({ message: 'Email sent successfully!' });
   } catch (error) {
       console.error('Error sending email:', error);

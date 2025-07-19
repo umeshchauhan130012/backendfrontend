@@ -69,6 +69,23 @@ const MenuItem = [
               },
               {
                 SubMenu: true,
+                MenuItemName: "Photo Story",
+                MenuItemLink: "/",
+                ChildMenuInner:[
+                    {
+                        SubMenu:false,
+                        MenuItemName:"All Photo Story",
+                        MenuItemLink:"/dashboard/photostory-list",
+                    },
+                    {
+                        SubMenu:false,
+                        MenuItemName:"Add Photo Story",
+                        MenuItemLink:"/dashboard/photostory-add",
+                    },
+                ],
+              },
+              {
+                SubMenu: true,
                 MenuItemName: "Gallery",
                 MenuItemLink: "/",
                 ChildMenuInner:[
@@ -188,12 +205,34 @@ const MenuItem = [
         ],
     },
     {
-        SubMenu:false,
-        MenuItemName:"Add Menu",
-        MenuItemIcon:"fa-plus-square-o",
-        MenuItemLink:"/dashboard/add-menu",
-        ChildMenu:[],
-    }
+        SubMenu:true,
+        MenuItemName:"Website Settings",
+        MenuItemIcon:"fa-cog",
+        MenuItemLink:"/",
+        ChildMenu:[
+            {
+                SubMenu:false,
+                MenuItemName:"Header Menu",
+                MenuItemLink:"/dashboard/add-menu",
+            },
+            {
+                SubMenu:false,
+                MenuItemName:"Footer Menu",
+                MenuItemLink:"/dashboard/add-foot-menu",
+            },
+            {
+                SubMenu:false,
+                MenuItemName:"Network Menu",
+                MenuItemLink:"/dashboard/add-network-menu",
+            },
+            {
+                SubMenu:false,
+                MenuItemName:"Site Logo",
+                MenuItemLink:"/dashboard/site-logo",
+            }
+        ],
+    },
+    
 ];
 
 const Sidebar = () => {

@@ -12,7 +12,7 @@ function AddMenuPage() {
 const [menuItems, setMenuItems] = useState([]);
 const [toast, setToast] = useState({ message: '', type: '', visible: false });
 const [loading, setLoading] = useState(false);
-const [form, setForm] = useState({name: "", url: "", order: "", parentId: "",});
+const [form, setForm] = useState({name: "", url: "", order: "", status: true, linktype: true, parentId: "",});
 const [nextId, setNextId] = useState(() => generateRandomId());
 const [menuDataList, setMenuDataList] = useState();
 const [dataRefresh, setDataRefresh] = useState(false);
@@ -26,8 +26,8 @@ const [loadingEdit, setLoadingEdit] = useState(false);
 
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    const { name, type, checked, value } = e.target;
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value, });
   };
 
 
@@ -50,6 +50,8 @@ const [loadingEdit, setLoadingEdit] = useState(false);
         name: form.name,
         url: form.url,
         order: form.order,
+        linktype: form.linktype,
+        status: form.status,
         parentId: form.parentId ? parseInt(form.parentId) : null,
         children: [], 
       };
@@ -61,15 +63,9 @@ const [loadingEdit, setLoadingEdit] = useState(false);
       } else {
         updatedMenuItems = [...menuItems, newMenuItem];
       }
-
       setMenuItems(updatedMenuItems);
       setNextId(nextId + 1);
-      console.log("Menu Items as Object:", {
-        count: updatedMenuItems.length,
-        items: updatedMenuItems,
-      });
-      console.log("Menu Items as Array:", updatedMenuItems);
-      setForm({ name: "", url: "", order: "", parentId: "" });
+      setForm({ name: "", url: "", order: "", parentId: "", status: true, linktype: true, });
     } else {
       setToast({ message: 'Please fill out both fields! Name and Url.', type: 'error', visible: true });
     }
@@ -103,7 +99,7 @@ const [loadingEdit, setLoadingEdit] = useState(false);
   const renderMenuItems = (items) => {
     return items.map((item) => (
       <li key={item.id}>
-        {item.name} -- url: {item.url} -- Index: {item.order}
+        {item.name} -- url: {item.url} -- Index: {item.order} -- Link type: {item.linktype ? "Active" : "Inactive"} -- Status: {item.status ? "Active" : "Inactive"}
         {item.children && item.children.length > 0 && (
           <ul>{renderMenuItems(item.children)}</ul>
         )}
@@ -282,7 +278,7 @@ const [loadingEdit, setLoadingEdit] = useState(false);
                   type="text"
                   name="name"
                   placeholder="Menu Item Name"
-                  value={form.name}
+                  value={form.name || ""}
                   onChange={handleInputChange}
                   style={{ marginRight: "10px" }}
                 />
@@ -294,7 +290,7 @@ const [loadingEdit, setLoadingEdit] = useState(false);
                   type="text"
                   name="url"
                   placeholder="Menu Item URL"
-                  value={form.url}
+                  value={form.url || ""}
                   onChange={handleInputChange}
                 />
               </Div>
@@ -303,7 +299,7 @@ const [loadingEdit, setLoadingEdit] = useState(false);
                 <select
                   className="cms-all-selector"
                   name="parentId"
-                  value={form.parentId}
+                  value={form.parentId || ""}
                   onChange={handleInputChange}
                 >
                   <option value="">No Parent</option>
@@ -315,12 +311,38 @@ const [loadingEdit, setLoadingEdit] = useState(false);
                 </select>
               </Div>
               <Div className="inputfieldwrapindex">
+                <span className="chkboxbtn-label">Internal</span>
+                <label htmlFor="chkboxbtnstint" className="chkboxbtn">
+                  <input 
+                  className="inputfield"
+                  type="checkbox" 
+                  id="chkboxbtnstint" 
+                  name="linktype"
+                  checked={!!form.linktype} 
+                  onChange={handleInputChange} 
+                  />
+                </label>
+              </Div>
+              <Div className="inputfieldwrapindex">
+                <span className="chkboxbtn-label">Status</span>
+                <label htmlFor="chkboxbtnstatus" className="chkboxbtn">
+                  <input 
+                  className="inputfield"
+                  type="checkbox" 
+                  id="chkboxbtnstatus" 
+                  name="status"
+                  checked={!!form.status} 
+                  onChange={handleInputChange} 
+                  />
+                </label>
+              </Div>
+              <Div className="inputfieldwrapindex">
                 <label>Index</label>
                 <input
                   className="inputfield"
                   type="text"
                   name="order"
-                  value={form.order}
+                  value={form.order || ""}
                   onChange={handleInputChange}
                 />
               </Div>
@@ -349,9 +371,9 @@ const [loadingEdit, setLoadingEdit] = useState(false);
                 menuDataList
                   .sort((a, b) => a.order - b.order)
                   .map((menuItem) => (
-                    <li key={menuItem._id}>
+                    <li key={menuItem.id}>
                       <Div className="menumainwrp">
-                        {menuItem.name} <b>-- link:</b> {menuItem.url} <b>-- Order:</b> {menuItem.order}
+                        {menuItem.name} <b>-- link:</b> {menuItem.url} <b>-- Order:</b> {menuItem.order} <b>-- linktype:</b> {menuItem.linktype ? "Active" : "Inactive"} <b>-- status:</b> {menuItem.status ? "Active" : "Inactive"}
                       </Div>
                       <Div className="menueditbtn">
                         <button
@@ -370,7 +392,7 @@ const [loadingEdit, setLoadingEdit] = useState(false);
                         </button>
                       </Div>
                       {menuItem.children && menuItem.children.length > 0 && (
-                        <NestedMenuList menuItems={menuItem.children} />
+                        <NestedMenuList menuItems={menuItem.children} key={menuItem.id} />
                       )}
                   </li>
                 ))}
@@ -410,10 +432,10 @@ const NestedMenuList = ({ menuItems }) => {
       {menuItems
         .sort((a, b) => a.order - b.order)
         .map((menuItem) => (
-          <li key={menuItem._id}>
-            {menuItem.name} <b>-- link:</b> {menuItem.url} <b>-- Order:</b> {menuItem.order}
+          <li key={menuItem.id}>
+            {menuItem.name} <b>-- link:</b> {menuItem.url} <b>-- Order:</b> {menuItem.order} <b>-- Status:</b> {menuItem.linktype ? "Active" : "Inactive"} <b>-- Order:</b> {menuItem.status ? "Active" : "Inactive"}
             {menuItem.children && menuItem.children.length > 0 && (
-              <NestedMenuList menuItems={menuItem.children} />
+              <NestedMenuList menuItems={menuItem.children} key={menuItem.id} />
             )}
           </li>
         ))}
@@ -436,7 +458,7 @@ const MenuItemEditor = ({ item, onInputChange }) => (
         <input
           className="inputfield"
           type="text"
-          value={item.name}
+          value={item.name || ""}
           onChange={(e) => onInputChange(item.id, "name", e.target.value)}
         />
       </Div>
@@ -445,16 +467,42 @@ const MenuItemEditor = ({ item, onInputChange }) => (
         <input
           className="inputfield"
           type="text"
-          value={item.url}
+          value={item.url || ""}
           onChange={(e) => onInputChange(item.id, "url", e.target.value)}
         />
+      </Div>
+      <Div className="inputfieldwrapindex">
+        <span className="chkboxbtn-label">Internal</span>
+        <label htmlFor={"chkboxbtnstinted"+item.id} className="chkboxbtn">
+          <input 
+          className="inputfield"
+          type="checkbox" 
+          id={"chkboxbtnstinted"+item.id} 
+          name="linktype"
+          checked={!!item.linktype} 
+          onChange={(e) => onInputChange(item.id, "linktype", e.target.checked)}
+          />
+        </label>
+      </Div>
+      <Div className="inputfieldwrapindex">
+        <span className="chkboxbtn-label">Status</span>
+        <label htmlFor={"chkboxbtnstatused"+item.id} className="chkboxbtn">
+          <input 
+          className="inputfield"
+          type="checkbox" 
+          id={"chkboxbtnstatused"+item.id} 
+          name="status"
+          checked={!!item.status} 
+          onChange={(e) => onInputChange(item.id, "status", e.target.checked)}
+          />
+        </label>
       </Div>
       <Div className="inputfieldwrapindex">
         <label>Index</label>
         <input
           className="inputfield"
           type="number"
-          value={item.order}
+          value={item.order || ""}
           onChange={(e) => onInputChange(item.id, "order", e.target.value)}
         />
       </Div>
@@ -462,7 +510,7 @@ const MenuItemEditor = ({ item, onInputChange }) => (
     
     {item.children &&
       item.children.map((child) => (
-        <Div className="inputfielgridsinglewpmain">
+        <Div className="inputfielgridsinglewpmain" key={child.id}>
         <MenuItemEditor
           key={child.id}
           item={child}

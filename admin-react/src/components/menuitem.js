@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import Div from "./div";
 
 const MenuManager = () => {
-  const [menuItems, setMenuItems] = useState([]); // Array to store menu items
+  const [menuItems, setMenuItems] = useState([]); 
   const [form, setForm] = useState({
     name: "",
     url: "",
     order: "",
-    parentId: "", // For associating child menu with a parent
+    parentId: "", 
   });
-  const [nextId, setNextId] = useState(1); // Keeps track of the next unique ID
+  const [nextId, setNextId] = useState(1); 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -19,58 +19,47 @@ const MenuManager = () => {
   const addMenuItem = () => {
     if (form.name && form.url) {
       const newMenuItem = {
-        id: nextId, // Use a unique ID
+        id: nextId, 
         name: form.name,
         url: form.url,
         order: form.order,
-        parentId: form.parentId ? parseInt(form.parentId) : null, // Associate with parent if ID provided
-        children: [], // Initialize children as an empty array
+        parentId: form.parentId ? parseInt(form.parentId) : null,
+        children: [], 
       };
 
       let updatedMenuItems;
-
       if (newMenuItem.parentId) {
-        // Add to the appropriate parent menu's children
         updatedMenuItems = addChildToParent(menuItems, newMenuItem);
       } else {
-        // Add as a top-level menu item
         updatedMenuItems = [...menuItems, newMenuItem];
       }
 
       setMenuItems(updatedMenuItems);
-
-      // Increment the next unique ID
       setNextId(nextId + 1);
 
-      // Log data in object and array format
       console.log("Menu Items as Object:", {
         count: updatedMenuItems.length,
         items: updatedMenuItems,
       });
       console.log("Menu Items as Array:", updatedMenuItems);
 
-      // Reset the form
       setForm({ name: "", url: "", order: "", parentId: "" });
     } else {
       alert("Please fill out both fields!");
     }
   };
 
-  // Recursive function to find the correct parent and add the child
   const addChildToParent = (items, newChild) => {
     return items.map((item) => {
       if (item.id === newChild.parentId) {
-        // Found the parent, add the child
         return { ...item, children: [...item.children, newChild] };
       } else if (item.children && item.children.length > 0) {
-        // Recurse into children to find the correct parent
         return { ...item, children: addChildToParent(item.children, newChild) };
       }
       return item;
     });
   };
 
-  // Recursive function to generate a flat list of all menu items with hierarchy
   const getParentOptions = (items, prefix = "") => {
     let options = [];
     for (let item of items) {

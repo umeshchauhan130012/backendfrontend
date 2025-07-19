@@ -6,17 +6,16 @@ const cors = require('cors');
 
 router.use(cors());
 //  add Menuitem
-router.post("/menuitem", async(req, res) => {
+router.post("/menuitem", protect, async(req, res) => {
     try{
         const menuList = await Menuitem.insertMany(req.body);
-       console.log("hiiiiiiiiiiiiii", menuList);
        res.status(201).send(menuList);
     }catch(err){
        res.status(400).send(err)
     } 
 }) 
 //  Get All menuitem 
-router.get("/menuitem", protect, async(req, res) => {
+router.get("/menuitem", async(req, res) => {
     try{
         const menuData = await Menuitem.find();
         res.send(menuData);
@@ -53,7 +52,7 @@ router.delete("/menuitem/:id", protect, async(req, res) => {
     }
 })
 //  Update single menuitem
-router.patch("/menuitem/:id", async(req, res) => {
+router.patch("/menuitem/:id", protect, async(req, res) => {
     try{
         const _id = req.params.id;
         const menuUpdate = await Menuitem.findByIdAndUpdate(_id, req.body, {new: true});

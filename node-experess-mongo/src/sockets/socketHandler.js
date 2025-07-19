@@ -2,18 +2,11 @@ const Chats = require('../models/chats');
 const clients = new Set();
 const onlineUsers = new Map();
 
-
 const handleSocketConnection = (ws, sender) => {
   ws.sender = sender; 
   clients.add(ws);
   onlineUsers.set(sender, ws);
 
-  Chats.updateMany(
-      { sender: sender },
-      { online: true }
-    ).catch(() => {
-      console.error('Error updating user online status:');
-  });
   sendUniqueSenders(ws);
   
   ws.on('message', async (data) => {
@@ -21,6 +14,7 @@ const handleSocketConnection = (ws, sender) => {
       const messageData = JSON.parse(data);
       if (messageData.type === 'getChatHistory') {
         await sendChatHistory(ws, messageData.sender, messageData.recipient);
+        console.log(`✅ ${messageData.sender} is online`);
       }
 
       if (messageData.type === 'newMessage') {
@@ -28,12 +22,11 @@ const handleSocketConnection = (ws, sender) => {
         sender: messageData.sender,
         recipient: messageData.recipient,
         message: messageData.message,
-        timestamp: Date.now() // Set to current date and time
+        timestamp: Date.now() 
       });
 
       const savedMessage = await newMessage.save();
       console.log('Message saved to database:', savedMessage);
-      // Broadcast the new message to all connected clients
       clients.forEach(client => {
         if (client.readyState === client.OPEN) {
           client.send(JSON.stringify({ status: 'Message saved successfully', savedMessage }));
@@ -42,16 +35,12 @@ const handleSocketConnection = (ws, sender) => {
       await sendChatHistory(ws, messageData.sender, messageData.recipient);
     }
     } catch (err) {
-      console.error('Error processing message', err);
+      console.error('catch block processing message', err);
     }
   });
   ws.on('close', async () => {
     clients.delete(ws);
     console.log('WebSocket connection closed');
-    await Chats.updateMany(
-      { sender: sender },
-      { online: false }
-     ).catch(() => console.error('Error: user offline sockets close:'));
   });
 };
 
@@ -60,15 +49,15 @@ const sendUniqueSenders = async (ws) => {
   try {
     const uniqueSenders = await Chats.distinct("sender");
     const usersWithStatus = await Promise.all(uniqueSenders.map(async (sender) => {
-      const isOnline = onlineUsers.has(sender); // Check online status in the map
-      await Chats.updateMany({ sender }, { online: isOnline }); // Update online status in DB
+      const isOnline = onlineUsers.has(sender); 
+      await Chats.updateMany({ sender }, { online: isOnline }); 
       return { sender, online: isOnline };
     })); 
     //console.log("lllllllllllllllll----------------",usersWithStatus);
     // ws.send(JSON.stringify({ type: 'uniqueSenders', users: uniqueSenders }));
     ws.send(JSON.stringify({ type: 'uniqueSenders', users: usersWithStatus }));
   } catch (error) {
-    console.error('Error fetching unique user', error);
+    console.error('Catch block fetching unique user', error);
   }
 }; 
 // Function to fetch and send unique senders all history
@@ -82,7 +71,7 @@ const sendChatHistory = async (ws, currentUser, otherUser) => {
     }).sort({ timestamp: 1 });
     ws.send(JSON.stringify({ type: 'getChatHistory', chatHistory }));
   } catch (error) {
-    console.error('Error to find history', error);
+    console.error('catch block to find history', error);
   }
 };
 

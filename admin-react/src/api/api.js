@@ -387,7 +387,7 @@ export const getSingleMenuId = async (endpoint) => {
     throw error;
   }
 };
-// Update tags
+// Update single menu
 export const updateSingleMenu = async (endpoint, payload) => {
   const token = localStorage.getItem('authToken');
   if (!token) {
@@ -399,6 +399,398 @@ export const updateSingleMenu = async (endpoint, payload) => {
     return response.data;
   } catch (error) {
     console.error('Error posting data:', error);
+    throw error;
+  }
+};
+// add footer menu
+export const footAddMenu = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.post(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+//get All footer menu
+export const footGetAllMenu = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Delete footer Menu
+export const footDeleteSingleMenu = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.delete(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Get by id single footer menu
+export const footGetSingleMenuId = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Update single footer menu
+export const footUpdateSingleMenu = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.patch(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+// add network menu
+export const networkAddMenu = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.post(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+//get All network menu
+export const networkGetAllMenu = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Delete network Menu
+export const networkDeleteSingleMenu = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.delete(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Get by id single network menu
+export const networkGetSingleMenuId = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Update single network menu
+export const networkUpdateSingleMenu = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.patch(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+//gallery headlogo
+export const logoHeadUpdate = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    apiClient.defaults.headers['Content-Type'] = `multipart/form-data`;
+    const response = await apiClient.patch(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data66666:', error);
+    throw error;
+  }
+};
+// Get by id headlogo
+export const logoHeadGetById = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+//get All headlogo
+export const getlogoHead = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+//gallery footlogo
+export const logoFootUpdate = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    apiClient.defaults.headers['Content-Type'] = `multipart/form-data`;
+    const response = await apiClient.patch(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data66666:', error);
+    throw error;
+  }
+};
+// Get by id footlogo
+export const logoFootGetById = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+//get All footlogo
+export const getlogoFoot = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+//get copyright
+export const getCopyright = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Get by id copyright
+export const getCopyrightById = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Update copyright
+export const updateCopyrightById = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.patch(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+//get copyright
+export const getYoutubeLink = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Get by id copyright
+export const getYoutubeLinkById = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Update copyright
+export const updateYoutubeLinkById = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.patch(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+//photo story post
+export const photoStoryPost = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    apiClient.defaults.headers['Content-Type'] = `multipart/form-data`;
+    const response = await apiClient.post(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data:', error);
+    throw error;
+  }
+};
+//story Update
+export const photoStoryUpdate = async (endpoint, payload) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    apiClient.defaults.headers['Content-Type'] = `multipart/form-data`;
+    const response = await apiClient.patch(endpoint, payload);
+    return response.data;
+  } catch (error) {
+    console.error('Error posting data66666:', error);
+    throw error;
+  }
+};
+// Get by id Story
+export const photoStoryGetById = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+//get All story
+export const getAllPhotoStory = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get(endpoint);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+// Delete Tags
+export const photoStoryDelete = async (endpoint) => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    return null;  
+  }
+  try {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.delete(endpoint);
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };

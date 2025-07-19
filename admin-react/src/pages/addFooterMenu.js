@@ -1,0 +1,452 @@
+import React, { useEffect, useState } from 'react';
+import ProtectedRoute from '../components/protectedRouts'
+import Toast from '../components/toast';
+import { footAddMenu, footDeleteSingleMenu, footGetAllMenu, footGetSingleMenuId, footUpdateSingleMenu } from '../api/api';
+import Div from '../components/div';
+
+function generateRandomId() {
+  return Math.floor(Math.random() * 1000000); 
+}
+
+function AddFootMenuPage() {
+const [menuItems, setMenuItems] = useState([]);
+const [toast, setToast] = useState({ message: '', type: '', visible: false });
+const [loading, setLoading] = useState(false);
+const [form, setForm] = useState({name: "", url: "", order: "", linktype: true, parentId: "",});
+const [nextId, setNextId] = useState(() => generateRandomId());
+const [menuDataList, setMenuDataList] = useState();
+const [dataRefresh, setDataRefresh] = useState(false);
+const [showPopup, setShowPopup] = useState(false); 
+const [selectedRow, setSelectedRow] = useState(null);
+const [loadingSecond, setLoadingSecond] = useState(false);
+const [getMenuId, setGetMenuId] = useState(null);
+const [menuDataGet, setMenuDataGet] = useState([]);
+const [showPopupMenu, setShowPopupMenu] = useState(false); 
+const [loadingEdit, setLoadingEdit] = useState(false);
+
+
+  const handleInputChange = (e) => {
+    const { name, type, checked, value } = e.target;
+    setForm({ ...form, [name]: type === "checkbox" ? checked : value, });
+  };
+
+  const confirmDelete = () => {
+    menuDeleteApiCall(selectedRow);
+    setShowPopup(false); 
+    setSelectedRow(null); 
+    };
+
+  const cancelDelete = () => {
+    setShowPopup(false);
+    setSelectedRow(null);
+    };
+
+  const addMenuItem = () => {
+    if (form.name && form.url) {
+      const newMenuItem = {
+        id: nextId, 
+        name: form.name,
+        url: form.url,
+        linktype: form.linktype,
+        order: form.order, 
+      };
+
+      let updatedMenuItems;
+    updatedMenuItems = [...menuItems, newMenuItem];
+
+      setMenuItems(updatedMenuItems);
+      setNextId(nextId + 1);
+      console.log("Menu Items as Object:", {
+        count: updatedMenuItems.length,
+        items: updatedMenuItems,
+      });
+      console.log("Menu Items as Array:", updatedMenuItems);
+      setForm({ name: "", url: "", linktype: true, order: "", parentId: "" });
+    } else {
+      setToast({ message: 'Please fill out both fields! Name and Url.', type: 'error', visible: true });
+    }
+  };
+
+
+  const getParentOptions = (items, prefix = "") => {
+    let options = [];
+    for (let item of items) {
+      options.push({
+        id: item.id,
+        name: `${prefix}${item.name}`,
+      });
+      if (item.children && item.children.length > 0) {
+        options = [...options, ...getParentOptions(item.children, `${prefix}-- `)];
+      }
+    }
+    return options;
+  };
+
+  const renderMenuItems = (items) => {
+    return items.map((item) => (
+      <li key={item.id}>
+        {item.name} -- url: {item.url} -- Index: {item.order} -- Link type: {item.linktype ? "Active" : "Inactive"}
+      </li>
+    ));
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await footGetAllMenu('/footmenuitem');
+          setMenuDataList(response);
+      } catch (error) {
+          console.error('Failed to fetch data:', error);
+      }
+    };
+    fetchData();
+  }, [dataRefresh]); 
+
+
+  const handleFinalSubmit = async () => {
+      if (!menuItems || menuItems.length === 0) {
+        setToast({
+          message: 'No menu items to submit!',
+          type: 'error',
+          visible: true,
+        });
+        return;
+      }
+      setLoading(true);
+      try {
+          await footAddMenu('/footmenuitem', menuItems); 
+          setToast({ message: 'Menu submited successfully done!', type: 'success', visible: true });
+          setDataRefresh(prev => !prev);
+          setMenuItems([]);
+      } catch (err) {
+          setToast({ message: 'Sorry something went worng!', type: 'error', visible: true }); 
+      } finally {
+          setLoading(false);
+      }  
+  };
+
+  const handleMenuEdit = async (idget) => {
+      setGetMenuId(idget);
+      setShowPopupMenu(true);
+  }
+
+  const cancelEdit = async () => {
+    setGetMenuId(null);
+    setShowPopupMenu(false);
+  }
+
+  const handleMenuDelete = async (del) => {
+    setSelectedRow(del); 
+    setShowPopup(true); 
+  }
+
+  const menuDeleteApiCall = async (data) => {
+    setLoadingSecond(true);
+    try {
+        console.log(data);
+        await footDeleteSingleMenu(`/footmenuitem/${data}`); 
+        setToast({ message: 'Tag deleted successfully done!', type: 'success', visible: true });
+        setDataRefresh(prev => !prev);
+    } catch (err) {
+        console.log(err.response?.data?.message || err.message); 
+    } finally {
+        setLoadingSecond(false);  
+        setShowPopup(false);  
+        setSelectedRow(null);  
+    }  
+  };
+
+  useEffect(() => {
+    if (getMenuId !== null) {
+      const fetchDataById = async () => {
+          try {
+          const response = await footGetSingleMenuId(`/footmenuitem/${getMenuId}`);
+            setMenuDataGet(response);
+          } catch (error) {
+          console.error('Failed to fetch data by ID:', error);
+          }
+      };
+      fetchDataById();
+    }
+  }, [getMenuId]);
+
+  const updateNestedField = (data, id, field, value) => {
+    if (data.id === id) {
+      return { ...data, [field]: value };
+    }
+    
+    return data;
+  };
+
+  const handleInputChangeEdit = (id, field, value) => {
+    const updatedData = updateNestedField(menuDataGet, id, field, value);
+    setMenuDataGet(updatedData);
+  };
+
+  const validateMenuData = (data) => {
+    if (!data.name || !data.url) {
+      return false;
+    }
+    return true;
+  };
+
+  const updateMenu = async () => {
+    if (!validateMenuData(menuDataGet)) {
+      alert("Please fill all required fields.");
+      return;
+    }
+    setLoadingEdit(true);
+     try {
+        await footUpdateSingleMenu(`/footmenuitem/${getMenuId}`, menuDataGet); 
+        setToast({ message: 'Data Updated successfully done!', type: 'success', visible: true });
+        setDataRefresh(prev => !prev);
+    } catch (err) {
+        setToast({ message: 'Sorry something went worng!', type: 'error', visible: true });
+    } finally {
+        setLoadingEdit(false);
+        setShowPopupMenu(false);
+    }  
+
+  };
+
+  useEffect(() => {
+    if (menuItems.length === 0) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [menuItems]);
+
+  return (
+    <ProtectedRoute>
+      {toast.visible && (
+          <Toast 
+          message={toast.message} 
+          type={toast.type} 
+          duration={3000} 
+          onClose={() => setToast({ ...toast, visible: false })} 
+          />
+      )}
+      <Div className="custom-container">
+        <Div className="custom-row">
+          <Div className="custom-col-12">
+            <Div className="custom-section-title">
+              <h4>Add Footer Menu</h4>
+            </Div>
+          </Div>
+        </Div>
+      </Div>
+      <Div className="custom-fullform-wrapper">
+        <Div className="formbithout-sectionm">
+          <Div className="formbithout-section">
+            <Div className="inputfielgridsingle">
+              <Div className="inputfieldwrap">
+                <label>Item Name<em>*</em></label>
+                <input
+                  className="inputfield"
+                  type="text"
+                  name="name"
+                  placeholder="Menu Item Name"
+                  value={form.name || ""}
+                  onChange={handleInputChange}
+                  style={{ marginRight: "10px" }}
+                />
+              </Div>
+              <Div className="inputfieldwrap">
+                <label>Url<em>*</em></label>
+                <input
+                  className="inputfield"
+                  type="text"
+                  name="url"
+                  placeholder="Menu Item URL"
+                  value={form.url || ""}
+                  onChange={handleInputChange}
+                />
+              </Div>
+              <Div className="inputfieldwrapindex">
+                <span className="chkboxbtn-label">Internal</span>
+                <label htmlFor="chkboxbtnstint" className="chkboxbtn">
+                  <input 
+                  className="inputfield"
+                  type="checkbox" 
+                  id="chkboxbtnstint" 
+                  name="linktype"
+                  checked={!!form.linktype} 
+                  onChange={handleInputChange} 
+                  />
+                </label>
+              </Div>
+              <Div className="inputfieldwrapindex">
+                <label>Index</label>
+                <input
+                  className="inputfield"
+                  type="text"
+                  name="order"
+                  value={form.order || ""}
+                  onChange={handleInputChange}
+                />
+              </Div>
+              <Div className="inputfieldwrapend">
+                <label>Actions</label>
+                <Div className="action-contain">
+                  <span className="fa fa-plus" onClick={addMenuItem}></span>
+                </Div>
+              </Div>
+            </Div>
+          </Div>
+          <Div className='all-menuitems'>
+            <h2>Menu Items:</h2>
+            {menuItems.length === 0 ? (
+              <p>No menu items added yet.</p>
+            ) : (
+              <ul className='menuitems-lavel'>{renderMenuItems(menuItems)}</ul>
+            )}
+          </Div>
+          <Div className="buttonwrape">
+            <button type="button" onClick={handleFinalSubmit} disabled={loading} className="buttonst">Submit Now</button>
+          </Div>
+          <Div className='all-menuitems'>
+            <ul className="menuitems-lavel">
+              {menuDataList &&
+                menuDataList
+                  .sort((a, b) => a.order - b.order)
+                  .map((menuItem) => (
+                    <li key={menuItem._id}>
+                      <Div className="menumainwrp">
+                        {menuItem.name} <b>-- link:</b> {menuItem.url} <b>-- Order:</b> {menuItem.order} <b>-- linktype:</b> {menuItem.linktype ? "Active" : "Inactive"} 
+                      </Div>
+                      <Div className="menueditbtn">
+                        <button
+                          type="button"
+                          className="editbtn-icon"
+                          onClick={() => handleMenuEdit(menuItem._id)}
+                        >
+                          <i className="fa fa-pencil"></i>
+                        </button>
+                        <button
+                          type="button"
+                          className="deletebtn-icon"
+                          onClick={() => handleMenuDelete(menuItem._id)}
+                        >
+                          <i className="fa fa-trash"></i>
+                        </button>
+                      </Div>
+                  </li>
+                ))}
+            </ul>
+          </Div>
+        </Div>
+      </Div>
+      {showPopup && (
+        <Div style={popupStyle}>
+          <p>Are you sure you want to delete?</p>
+          <button onClick={confirmDelete} disabled={loadingSecond}>Yes</button>
+          <button onClick={cancelDelete} disabled={loadingSecond}>No</button>
+        </Div>
+      )}
+      {showPopupMenu && (
+      <Div style={popupStylefull}>
+        <Div style={popupStylefullinner}>
+          <Div className="formbithout-popup">
+            <MenuEditor data={menuDataGet} onInputChange={handleInputChangeEdit} />
+            <Div className='btngrp'>
+              <button onClick={updateMenu} disabled={loadingEdit} className='successbtn'>Update</button>
+              <button onClick={cancelEdit} disabled={loadingEdit} className='cancelbtn'>Cancel</button>
+            </Div>
+          </Div>
+        </Div>
+      </Div>
+      )}
+
+    </ProtectedRoute>
+  );
+}
+
+
+const MenuEditor = ({ data, onInputChange }) => (
+  <Div className="inputfielgridout">
+    <MenuItemEditor item={data} onInputChange={onInputChange} />
+</Div>
+);
+
+const MenuItemEditor = ({ item, onInputChange }) => (
+<>
+    <Div className="inputfielgridsingle">
+      <Div className="inputfieldwrap">
+        <label>Item Name<em>*</em></label>
+        <input
+          className="inputfield"
+          type="text"
+          value={item.name || ""}
+          onChange={(e) => onInputChange(item.id, "name", e.target.value)}
+        />
+      </Div>
+      <Div className="inputfieldwrap">
+        <label>Url<em>*</em></label>
+        <input
+          className="inputfield"
+          type="text"
+          value={item.url || ""}
+          onChange={(e) => onInputChange(item.id, "url", e.target.value)}
+        />
+      </Div>
+      <Div className="inputfieldwrapindex">
+        <span className="chkboxbtn-label">Internal</span>
+        <label htmlFor={"chkboxbtnstinted"+item.id} className="chkboxbtn">
+          <input 
+          className="inputfield"
+          type="checkbox" 
+          id={"chkboxbtnstinted"+item.id} 
+          name="linktype"
+          checked={!!item.linktype} 
+          onChange={(e) => onInputChange(item.id, "linktype", e.target.checked)}
+          />
+        </label>
+      </Div>
+      <Div className="inputfieldwrapindex">
+        <label>Index</label>
+        <input
+          className="inputfield"
+          type="number"
+          value={item.order || ""}
+          onChange={(e) => onInputChange(item.id, "order", e.target.value)}
+        />
+      </Div>
+    </Div>
+      
+</>
+);
+
+const popupStyle = {
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  backgroundColor: '#ffffff',
+  padding: '20px',
+  boxShadow: '0px 0px 11px -3px rgb(127 127 127)',
+  zIndex: '1000',
+  textAlign: 'center',
+  borderRadius: '10px'
+};
+const popupStylefull = {
+  position: 'fixed',
+  backgroundColor: 'rgb(0 0 0 / 64%)',
+  padding: '20px',
+  zIndex: '9999',
+  left: '0',
+  right: '0',
+  top: '0',
+  bottom: '0',
+  overflowY: 'auto',
+  display: 'flex',
+};
+const popupStylefullinner = {
+  maxWidth: '767px',
+  margin: 'auto auto',
+  backgroundColor: '#ffffff',
+  padding: '20px',
+  width: '100%',
+  minHeight: '200px',
+}
+export default AddFootMenuPage;
