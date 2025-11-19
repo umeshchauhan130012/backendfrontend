@@ -12,7 +12,7 @@ const Footer = () => {
   const { data: copyright, loading: copyloading, error: copyerror } = useFetch(fetchCopyright);
   const { data: footermenu, loading: fmenuloading, error: fmenuerror } = useFetch(fetchFootMenu);
   const { data: footerlogo, loading: flogoloading, error: flogoerror } = useFetch(fetchFootLogo);
-
+console.log(copyright);
   return (
     <>
         <Div className="idl24by7-footer">
